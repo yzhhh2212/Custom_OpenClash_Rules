@@ -1,8 +1,11 @@
-# NAME: Emby 补充规则
-# AUTHOR: Aethersailor
-# REPO: https://github.com/Aethersailor/Custom_OpenClash_Rules
-# 需要走代理的 Emby 服务的相关规则
+# =========================================
+# Emby 自建服务器分流
+# 域名线路:  http://o.204cloud.com:80
+# IP线路:   http://123.99.200.137:1111
+# =========================================
 
+# 域名访问 Emby（无论是 80 还是其他端口，都能命中）
+DOMAIN,o.204cloud.com
 
-# 本规则不再更新
-# 建议使用 geosite:category-emby
+# 直连 IP 访问 Emby
+IP-CIDR,123.99.200.137/32,no-resolve
