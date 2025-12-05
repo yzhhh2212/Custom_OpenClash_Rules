@@ -1,0 +1,55 @@
+# =========================================================
+# Apple Intelligence / Apple AI 分流规则
+#
+# 来源 1（Apple 官方 Apple Intelligence 域名列表）:
+#   https://support.apple.com/en-us/101555
+#   小节： "Apple Intelligence, Siri, and Search"
+#
+# 来源 2（常用社区规则 - Apple Intelligence）:
+#   https://raw.githubusercontent.com/ConnersHua/RuleGo/master/Surge/Ruleset/Extra/AI.list
+#
+# 来源 3（社区整理 Apple Intelligence 相关域名说明）:
+#   https://www.choge-blog.com/programming/appleservice-domainsettings/
+#
+# 来源 4（Apple Intelligence 隐私分析，整理 PCC / Siri / Search 域名）:
+#   https://lumia.security/blog/applestorm
+#
+# 如果以后要和 Accademia 的 AppleAI 规则对齐，可以对照:
+#   https://github.com/Accademia/Additional_Rule_For_Clash/tree/main/AppleAI
+#   里的 AppleAI_Domain / AppleAI_No_Resolve 等文件手动补充 /调整。
+# =========================================================
+
+# --- Apple Intelligence Extensions / ChatGPT 扩展 & PCC 中转 ---
+
+# Apple Intelligence Extensions （当前主要用于 ChatGPT 扩展）
+DOMAIN-SUFFIX,apple-relay.apple.com
+
+# Private Cloud Compute 使用的几个中转域名
+DOMAIN-SUFFIX,apple-relay.cloudflare.com
+DOMAIN-SUFFIX,apple-relay.fastly-edge.com
+DOMAIN-SUFFIX,cp4.cloudflare.com
+
+# 一些规则集会把 PCC 的一部分流量也算在 Apple Intelligence 里
+#（视实际需求可以改回走通用 Apple 组）
+DOMAIN-SUFFIX,gateway.icloud.com
+
+# --- Siri / Dictation / Search 基础服务（和 Apple Intelligence 共用） ---
+
+# Siri 语音 / 听写服务器
+DOMAIN-SUFFIX,guzzoni.apple.com
+
+# Search / Spotlight / Siri 搜索 / News / Music 等搜索服务
+DOMAIN-SUFFIX,smoot.apple.com
+
+# Siri / Search 相关的额外 HTTPS 终端（在部分社区规则中出现）
+DOMAIN-SUFFIX,gspe1-ssl.ls.apple.com
+
+# --- 资源下载（模型 / 扩展相关资源，社区常见写法） ---
+
+# App / 资源分发（部分情形下用于 Apple Intelligence 相关资源）
+DOMAIN-SUFFIX,apps.mzstatic.com
+
+# --- 可选：更激进的匹配，怕漏请求可以打开 ---
+
+# 捕获所有包含 apple-relay 的域名（可能包括 CNAME 等）
+# DOMAIN-KEYWORD,apple-relay
