@@ -5,3 +5,15 @@ DOMAIN-KEYWORD,italent
 DOMAIN-KEYWORD,huilianyi
 DOMAIN-KEYWORD,mokahr
 DOMAIN-KEYWORD,xhslink
+# --- T-Mobile US Wi-Fi Calling 官方网段（直接抄那段 rules） ---
+IP-CIDR,208.54.0.0/16,no-resolve
+IP-CIDR,66.94.0.0/19,no-resolve
+IP-CIDR,206.29.177.36/32,no-resolve
+
+# 上面这个 208.54.0.0/16 已经覆盖了你 hosts 里用到的 208.54.35.163、
+# 208.54.87.3、208.54.49.131、208.54.36.3 等 IP，一般不用再单独列 /32。
+
+# --- ePDG 域名直连（对应你 hosts 里那几行域名） ---
+DOMAIN,epdg.epc.mnc260.mcc310.pub.3gppnetwork.org
+DOMAIN,ss.epdg.epc.mnc260.mcc310.pub.3gppnetwork.org
+DOMAIN,ss.epdg.epc.geo.mnc260.mcc310.pub.3gppnetwork.org
