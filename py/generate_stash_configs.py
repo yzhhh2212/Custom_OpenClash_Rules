@@ -21,7 +21,7 @@ TEMPLATE_PAIRS = (
 )
 
 EXPECTED_PROVIDER_COUNTS = {
-    "Custom_Stash.ini": 13,
+    "Custom_Stash.ini": 24,
     "Custom_Stash_Fallback.ini": 13,
     "Custom_Stash_Lite.ini": 9,
     "Custom_Stash_Lite_Fallback.ini": 9,
@@ -29,7 +29,7 @@ EXPECTED_PROVIDER_COUNTS = {
     "Custom_Stash_GFW_Fallback.ini": 3,
     "Custom_Stash_Full.ini": 13,
     "Custom_Stash_Full_Fallback.ini": 13,
-    "Custom_Stash_Mainland.ini": 13,
+    "Custom_Stash_Mainland.ini": 24,
 }
 
 META_GEOIP_URL = (
@@ -58,6 +58,17 @@ STASH_BUILTIN_POLICIES = frozenset({"DIRECT", "REJECT", "REJECT-DROP", "PASS"})
 # Every classical source is deliberately enumerated. A new source must choose an
 # equivalent Stash provider type or fail generation instead of leaking through.
 CLASSICAL_PROJECTIONS = {
+    "Emby.list": (("clash-classic", "Emby.list", False),),
+    "tello.list": (("clash-classic", "tello.list", False),),
+    "My_Direct.list": (("clash-classic", "My_Direct.list", False),),
+    "My_direct2.list": (("clash-classic", "My_direct2.list", False),),
+    "Telegram.list": (("clash-classic", "Telegram.list", False),),
+    "Twitter.list": (("clash-classic", "Twitter.list", False),),
+    "Copilot.list": (("clash-classic", "Copilot.list", False),),
+    "Claude.list": (("clash-classic", "Claude.list", False),),
+    "AppleAI.list": (("clash-classic", "AppleAI.list", False),),
+    "Teamviewer.list": (("clash-classic", "Teamviewer.list", False),),
+    "Adspower.list": (("clash-classic", "Adspower.list", False),),
     "Custom_Direct_Classical_IP.yaml": (
         ("clash-ipcidr", "Custom_Direct_IP.mrs", True),
     ),

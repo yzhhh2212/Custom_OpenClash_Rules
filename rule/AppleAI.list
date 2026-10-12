@@ -1,0 +1,35 @@
+# =========================================================
+# Apple Intelligence / Siri / 搜索 分流规则（AppleAI.list）
+#
+# 主要来源：
+# - Accademia / Additional_Rule_For_Clash / AppleAI
+#   https://github.com/Accademia/Additional_Rule_For_Clash/tree/main/AppleAI
+#
+# 原始 payload 中的注释行这里全部启用，如果觉得匹配过宽，
+# 可以按需要自己注释掉相应 DOMAIN 行。
+# =========================================================
+
+# 搜索服务：Siri / Spotlight / Lookup / Safari / News / 信息 / 音乐（TCP 443）
+DOMAIN-SUFFIX,smoot.apple.com
+
+# Siri 与听写（TCP 443）
+DOMAIN,guzzoni.apple.com
+
+# 辅助域名
+DOMAIN,gspe1-ssl.ls.apple.com
+DOMAIN,apple-relay.mask.apple-dns.net
+
+# Apple Intelligence Extensions / Private Cloud Compute（TCP/UDP 443）
+DOMAIN,apple-relay.fastly-edge.com
+DOMAIN,apple-relay.apple.com
+DOMAIN,apple-relay.cloudflare.com
+DOMAIN,cp4.cloudflare.com
+
+# 下列几条在上游规则中是注释掉的，这里默认也一并启用
+# 如遇到问题或希望更精细控制，可以自行注释掉相应行
+
+#DOMAIN,gateway.icloud.com
+#DOMAIN,gateway.fe2.apple-dns.net
+#DOMAIN,seed.siri.apple.com
+#DOMAIN,seed-siri-apple-com.v.aaplimg.com
+#DOMAIN,smoot-searchv2-aapse1c.v.aaplimg.com
