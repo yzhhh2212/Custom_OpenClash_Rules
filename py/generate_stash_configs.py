@@ -21,17 +21,21 @@ TEMPLATE_PAIRS = (
 )
 
 EXPECTED_PROVIDER_COUNTS = {
-    "Custom_Stash.ini": 24,
-    "Custom_Stash_Fallback.ini": 13,
-    "Custom_Stash_Lite.ini": 9,
-    "Custom_Stash_Lite_Fallback.ini": 9,
-    "Custom_Stash_GFW.ini": 3,
-    "Custom_Stash_GFW_Fallback.ini": 3,
-    "Custom_Stash_Full.ini": 13,
-    "Custom_Stash_Full_Fallback.ini": 13,
-    "Custom_Stash_Mainland.ini": 24,
+    "Custom_Stash.ini": 55,
+    "Custom_Stash_Fallback.ini": 44,
+    "Custom_Stash_Lite.ini": 23,
+    "Custom_Stash_Lite_Fallback.ini": 23,
+    "Custom_Stash_GFW.ini": 4,
+    "Custom_Stash_GFW_Fallback.ini": 4,
+    "Custom_Stash_Full.ini": 56,
+    "Custom_Stash_Full_Fallback.ini": 56,
+    "Custom_Stash_Mainland.ini": 55,
 }
 
+META_GEOSITE_URL = (
+    "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/"
+    "meta/geo/geosite/{name}.mrs"
+)
 META_GEOIP_URL = (
     "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/"
     "meta/geo/geoip/{name}.mrs"
@@ -93,7 +97,7 @@ CLASSICAL_PROJECTIONS = {
 GENERATED_HEADER = (
     "; 此文件由 py/generate_stash_configs.py 生成，请勿直接修改。\n"
     "; 策略来源：{source}\n"
-    "; Stash 兼容边界：非国家 GEOIP 已映射为 MRS；SRC-PORT,41641 因仅网关 SCRIPT\n"
+    "; Stash 兼容边界：GEOSITE 与非国家 GEOIP 已映射为 MRS；SRC-PORT,41641 因仅网关 SCRIPT\n"
     "; 可实现而被显式排除；策略组仅保留 interval，不输出无等价语义的组级 URL、\n"
     "; timeout 与 tolerance；复杂排除正则使用可移植的全节点回退或已有自动组。\n"
 )
@@ -158,7 +162,15 @@ def project_ruleset_line(line: str, direct_source: str) -> tuple[str, ...]:
         if rule_type == "GEOSITE":
             if len(fields) != 2 or not fields[1]:
                 raise ValueError(f"unsupported inline GEOSITE rule: {line}")
-            return (line,)
+            return (
+                _remote_ruleset(
+                    policy,
+                    "clash-domain",
+                    META_GEOSITE_URL.format(name=fields[1]),
+                    "28800",
+                    no_resolve=False,
+                ),
+            )
         if rule_type == "FINAL":
             if fields != ["FINAL"]:
                 raise ValueError(f"unsupported inline FINAL rule: {line}")
@@ -348,6 +360,8 @@ def validate_rendered(name: str, rendered: str) -> None:
     if any("SRC-PORT" in line for line in rulesets):
         raise ValueError(f"{name}: source-port rule leaked into Stash output")
     for line in rulesets:
+        if ",[]GEOSITE," in line:
+            raise ValueError(f"{name}: GEOSITE was not projected: {line}")
         if ",[]GEOIP," in line and ",[]GEOIP,cn,no-resolve" not in line:
             raise ValueError(f"{name}: non-country GEOIP was not projected: {line}")
     for line in rendered.splitlines():
